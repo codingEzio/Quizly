@@ -4,6 +4,12 @@
 - Apply sayings from [《认知天性》读后感](https://blog.laisky.com/p/make-it-stick/#gsc.tab=0)
 - Credit to the original idea of the product [*Quizzio*](https://www.quizzio.app/)
 
+## Tech
+
+- .NET 8
+- Vue 3
+- MySQL (in Docker)
+
 ## Status
 
 - Minimum viable product could be considered as completed

@@ -11,6 +11,11 @@ const routes = [
   { path: '/create', component: CreateQuiz },
   { path: '/answer/:id', component: AnswerQuiz },
   { path: '/settings', component: Settings },
+  {
+    path: '/quiz/:id',
+    name: 'AnswerQuiz',
+    component: AnswerQuiz
+  }
 ];
 
 const router = createRouter({

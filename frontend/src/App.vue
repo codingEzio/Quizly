@@ -6,22 +6,22 @@
           <div class="flex">
             <div class="flex-shrink-0 flex items-center">
               <router-link to="/" class="flex items-center">
-                <img src="path/to/logo-icon.png" alt="Logo" class="h-8 w-8">
+                <HomeIcon class="h-8 w-8 text-gray-800" />
                 <h1 class="ml-2 text-xl font-bold text-gray-800">Quiz App</h1>
               </router-link>
             </div>
           </div>
           <div class="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
             <router-link to="/" class="nav-link flex items-center">
-              <img src="path/to/dashboard-icon.png" alt="Dashboard Icon" class="h-6 w-6 mr-1">
+              <Squares2X2Icon class="h-6 w-6 mr-1" />
               Dashboard
             </router-link>
             <router-link to="/create" class="nav-link flex items-center">
-              <img src="path/to/create-icon.png" alt="Create Quiz Icon" class="h-6 w-6 mr-1">
+              <PlusCircleIcon class="h-6 w-6 mr-1" />
               Create Quiz
             </router-link>
             <router-link to="/settings" class="nav-link flex items-center">
-              <img src="path/to/settings-icon.png" alt="Settings Icon" class="h-6 w-6 mr-1">
+              <Cog6ToothIcon class="h-6 w-6 mr-1" />
               Settings
             </router-link>
           </div>
@@ -36,8 +36,16 @@
 </template>
 
 <script>
+import { HomeIcon, Squares2X2Icon, PlusCircleIcon, Cog6ToothIcon } from '@heroicons/vue/24/outline'
+
 export default {
   name: 'App',
+  components: {
+    HomeIcon,
+    Squares2X2Icon,
+    PlusCircleIcon,
+    Cog6ToothIcon
+  }
 };
 </script>
 

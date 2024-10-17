@@ -9,16 +9,23 @@
 ### data
 
 - user
-  - id
-  - name
-  - email
-  - password
+  - id (non-null, INT, pk)
+  - name (non-null, VARCHAR(50))
+  - email (null, VARCHAR(500))
+  - password (non-null, VARCHAR(1000))
 
-- quiz
-  - id
-  - title
-  - context
-  - difficulty
+- quiz_config
+  - id (non-null, INT, pk)
+  - title (non-null, VARCHAR(500))
+  - context (non-null)
+  - difficulty (non-null, ENUM(most easy, easy, medium, hard, most hard))
+
+- quiz_content
+  - quizId (non-null, INT, fk)
+  - userId (non-null, INT, fk)
+  - lang (non-null, ENUM(zh, en))
+  - rawContent (nullable)
+  - postProcessedContent (nullable)
 
 ### config
 
@@ -29,12 +36,12 @@
 
 - API
 
-    - `auth/register/`
-    - `auth/login/`
-    - `auth/logout/`
-    - `quiz/new/`
-    - `quiz/list/`
-    - `quiz/detail/` (list of questions)
+    - [x] `auth/register/`
+    - [x] `auth/login/`
+    - [ ] `auth/logout/`
+    - [ ] `quiz/new/`
+    - [ ] `quiz/list/`
+    - [ ] `quiz/detail/` (list of questions)
 
 - Util
 
@@ -69,5 +76,6 @@
 
 ## Roadmap
 
+- 配置化 via [Apollo .NET Client](https://github.com/apolloconfig/apollo.net) <sup>[doc](https://github.com/apolloconfig/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D)</sup>
 - Get a VPS for real-world deployment
 - Apply tons of high-concurrency solutions to this project for the sake of learning.

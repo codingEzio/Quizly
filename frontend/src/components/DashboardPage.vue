@@ -14,6 +14,7 @@
 
 <script>
 import QuizCard from './QuizCard.vue';
+import axios from 'axios';
 
 export default {
   name: 'DashboardPage',
@@ -22,14 +23,34 @@ export default {
   },
   data() {
     return {
-      quizzes: [
-        { id: 1, name: 'Quiz 1', created: '2023-10-01' },
-        { id: 2, name: 'Quiz 2', created: '2023-10-02' },
-        { id: 3, name: 'Quiz 3', created: '2023-10-03' },
-        { id: 4, name: 'Quiz 4', created: '2023-10-04' },
-        { id: 5, name: 'Quiz 5', created: '2023-10-05' },
-      ],
+      quizzes: [],
     };
+  },
+  created() {
+    this.fetchQuizzes();
+  },
+  methods: {
+    async fetchQuizzes() {
+      // set base API URL to localhost:5041
+      axios.defaults.baseURL = 'http://localhost:5041';
+
+      try {
+        const response = await axios.get('/api/Quiz/list', {
+          params: { userId: this.getUserId() }
+        });
+        if (response.data.success) {
+          this.quizzes = response.data.data;
+        } else {
+          console.error(response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching quizzes:', error);
+      }
+    },
+    getUserId() {
+      // Assume a method to retrieve the user ID of the currently logged in user
+      return 1; // Replace with real user ID fetching logic
+    },
   },
 };
 </script>

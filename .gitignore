@@ -2,6 +2,7 @@
 **/.vscode
 **/.idea
 
+**/.env
 
 # Created by https://www.toptal.com/developers/gitignore/api/Csharp,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=Csharp,react

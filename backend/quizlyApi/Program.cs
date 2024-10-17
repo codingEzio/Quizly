@@ -12,6 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVueApp",
+        builder => builder.WithOrigins("http://localhost:8080")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
+
 // Add DbContext for MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<QuizlyDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -34,6 +43,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Use CORS before other middleware
+app.UseCors("AllowVueApp");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

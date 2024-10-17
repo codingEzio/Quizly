@@ -56,13 +56,76 @@ public class QuizProvider
                 break;
         }
 
-        var eventualPrompt = string.Format(Constants.PromptTemplate, new
-        {
-            quizTitle = title,
-            quizLanguage = languageString,
-            quizDifficulty = diffcultyString,
-            quizContext = context
-        });
+        var quizTitle = title;
+        var quizLanguage = languageString;
+        var quizDifficulty = diffcultyString;
+        var quizContext = context;
+
+        var eventualPrompt = $@"
+            INPUT: {quizTitle}, language: {quizLanguage}, difficulty: {quizDifficulty}, 5 questions
+            CONTEXT: {quizContext}
+
+            Given the input above and some of the context given (INPUT has higher priority than CONTEXT),
+            please generate given amount of single-choice questions in a JSON format with the following structure:
+
+            The field 'answer_dissection' shall
+            - convince enough people to choose the correct answer (why, when, how etc.).
+            - start from first principle, then go the technical details
+            - use simple and clear English, avoid technical jargon
+
+            {{
+              ""metadata"": {{
+                ""total_q"": N
+              }},
+              ""content"": [
+                {{
+                  ""id"": 1,
+                  ""problem"": """",
+                  ""answer"": """",
+                  ""answer_dissection"": """",
+                  ""options"": [
+                    """",
+                    """",
+                    """",
+                    """"
+                  ]
+                }},
+                {{
+                  ""id"": 2,
+                  ""problem"": """",
+                  ""answer"": """",
+                  ""answer_dissection"": """",
+                  ""options"": [
+                    """",
+                    """",
+                    """",
+                    """"
+                  ]
+                }},
+                {{
+                  ""id"": 3,
+                  ""problem"": """",
+                  ""answer"": """",
+                  ""answer_dissection"": """",
+                  ""options"": [
+                    """",
+                    """",
+                    """",
+                    """"
+                  ]
+                }}
+              ]
+            }}
+
+            Please fill in the ""problem"", ""answer"", ""answer_dissection"", and ""options"" fields with appropriate values based on the input provided.
+            The field 'options' is a list of answers that only contain one correct answer.
+            The field 'answer' must be one of the options.
+            The field 'answer' is the correct answer to the problem.
+
+            You must follow the instructions I gave you exactly.
+        ";
+
+
         var (content, rawResponse) = await LLM.GenerateQuestionsAsync(eventualPrompt);
 
         if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(rawResponse))
@@ -375,7 +438,7 @@ public class QuizProvider
             int correctCount = 0;
             foreach (var answer in parsedContent.content)
             {
-                if (answer.answer == answerQuizDto.Answers.FirstOrDefault(c => c.Answer == answer.answer).Answer)
+                if (answer.answer == answerQuizDto.Answers.FirstOrDefault(c => c.Answer == answer.answer)?.Answer)
                 {
                     correctCount++;
                 }

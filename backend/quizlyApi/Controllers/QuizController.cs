@@ -23,7 +23,7 @@ namespace quizlyApi.Controllers
         // save the response to the database
 
         [HttpPost("new")]
-        public async Task<IActionResult> CreateQuiz(CreateQuizDto createQuizDto)
+        public async Task<IActionResult> CreateQuiz([FromBody] CreateQuizDto createQuizDto)
         {
             return _quizProvider.CreateQuiz(createQuizDto);
         }
@@ -47,7 +47,7 @@ namespace quizlyApi.Controllers
         // then return the result (stat for correct/wrong, LLM feedback, all Q/A pairs)
 
         [HttpPost("answer")]
-        public async Task<IActionResult> AnswerQuiz(AnswerQuizDto answerQuizDto)
+        public async Task<IActionResult> AnswerQuiz([FromBody]AnswerQuizDto answerQuizDto)
         {
             return _quizProvider.AnswerQuiz(answerQuizDto);
         }
